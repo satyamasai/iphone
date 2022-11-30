@@ -1,0 +1,69 @@
+import React, { useEffect, useState } from "react";
+import "./styles.css";
+
+const APIURL = "https://jsonplaceholder.typicode.com/users";
+function App() {
+const [data,setData] = useState([]);
+const [count,setCount] = useState(0);
+
+
+
+  const getUsers = () => {
+    // console.log("in")
+    //write code here
+       fetch(APIURL)
+       .then((res)=>res.json())
+       .then((res)=>{
+
+        //  console.log(res)
+         setData(res)             
+       }
+       )
+    //render the list of users
+  }
+  // useEffect(()=>{
+
+  // })
+
+  // console.log(data)
+
+  const sortList = () => {
+            // console.log("IN")
+      
+    // getUsers()
+    let tmp = JSON.parse(JSON.stringify(data));
+    let newData= tmp.sort((a,b)=>b.name.length - a.name.length)
+// console.log(data)
+    setData(newData)
+
+
+
+      //write code here
+      // sort the user list by name's length
+      // on first click list will sorted in assending order
+      // on second click list will be sorted in descending order
+      // on third click default list will be rendered
+      // on fourth click again start form step 1
+  }
+  
+  return (
+    <main>
+      <h1>User List</h1>
+      <div>
+        <button onClick={getUsers}>Get Users</button>
+        <button onClick={sortList}>Sort list by name's length</button>
+      </div>
+      <ul>
+        {/*render the list of the users */
+          data?.map((item)=>(
+            <li>{item.name}</li>
+          )
+          )
+
+        }
+      </ul>
+    </main>
+  )
+}
+
+export default App;
